@@ -1,10 +1,12 @@
 import data
 # RUN
-def run(input, user, candi, jin, bahan_bangunan):
+def run(input, user, candi, jin, bahan_bangunan, logged_in, logged_user):
     if input == "login":
-        data.login()
+        hasil = data.login(user, logged_in, logged_user)
+        return hasil
     elif input == "logout":
-        data.logout()
+        hasil = data.logout(logged_in, logged_user)
+        return hasil
     elif input == "summonjin":
         data.summonjin()
     elif input == "hapusjin":
@@ -20,9 +22,9 @@ def run(input, user, candi, jin, bahan_bangunan):
     elif input == "batchbangun":
         data.batchbangun()
     elif input == "laporanjin":
-        data.laporanjin(user, jin, bahan_bangunan)
+        data.laporanjin(logged_user, jin, bahan_bangunan)
     elif input == "laporancandi":
-        data.laporancandi(user, candi)
+        data.laporancandi(logged_user, candi)
     elif input == "hancurkancandi":
         data.hancurkancandi()
     elif input == "ayamberkokok":
@@ -32,6 +34,6 @@ def run(input, user, candi, jin, bahan_bangunan):
     elif input == "help":
         data.help()
     elif input == "exit":
-        data.exit()
+        exit()
     else:
         return 0
