@@ -8,9 +8,10 @@ def run(input, user, candi, jin, bahan_bangunan, logged_in, logged_user):
         hasil = data.logout(logged_in, logged_user)
         return hasil
     elif input == "summonjin":
-        data.summonjin()
+        jin = data.summonjin(logged_user, jin)
+        return jin
     elif input == "hapusjin":
-        data.hapusjin()
+        jindancandi = data.hapusjin(jin, candi)
     elif input == "ubahjin":
         data.ubahjin()
     elif input == "bangun":
@@ -32,7 +33,7 @@ def run(input, user, candi, jin, bahan_bangunan, logged_in, logged_user):
     elif input == "save":
         data.save()
     elif input == "help":
-        data.help()
+        data.help(logged_in, logged_user)
     elif input == "exit":
         exit()
     else:

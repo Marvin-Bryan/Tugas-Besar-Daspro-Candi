@@ -1,11 +1,11 @@
 # Data Penting
-def length(a):
+def length(a): # fungsi len
     sum = 0 
     while a[sum] != ".": # menggunakan titik untuk marking
         sum+=1
     return sum
 
-def konso(a, b): # fungsi append
+def konso(a, b): # fungsi append array & number
     len = length(a)+2
     li = [0 for i in range (len)]
     for i in range (length(a)):
@@ -72,16 +72,22 @@ def csvtomatrix(source):
                 else:
                     word+=file[i]
         return matrix
-   
-# F01 & F02 - BUAT JADI FUNCTION
-def login(users, logged_in, logged_user):
+
+def removelmt(arr, removed):
+    len = length(arr)
+    li = ["."]
+    for i in range (len):
+        if i != removed:
+            li = konso(li, arr[i])
+    return li
+
+def login(users, logged_in, logged_user): #F01
     # tampilkan prompt login
     if logged_in:
         username = ""
         for i in range (length(users)):
             if users[i][2] == users:
                 username = users[i][0]
-        print(username)
         print("Login gagal!")
         print("Anda telah login dengan username", username, end=", ")
         print("silahkan lakukan \"logout\" sebelum melakukan login kembali.")
@@ -106,18 +112,75 @@ def login(users, logged_in, logged_user):
     return logged_in, logged_user
         
         # periksa command yang dimasukkan
-def logout(logged_in, logged_user):
+
+def logout(logged_in, logged_user): #F02
     logged_in = False
     logged_user = ""
     print("Logout berhasil!")
     return logged_in, logged_user
 
-def help():
-    print("Daftar command yang dapat dipanggil:")
-    print("logout: Keluar dari sistem.")
-    print("help: Tampilkan daftar command yang dapat dipanggil.")
-    
+def summonjin(logged_user, jin): #F03
+    if logged_user == "bandung_bondowoso":
+        if length(jin) != 100:
+            print("Jenis jin yang dapat dipanggil:")
+            print(" (1) Pengumpul - Bertugas mengumpulkan bahan bangunan")
+            print(" (2) Pembangun - Bertugas membangun candi\n")
+            call = int(input("Masukkan nomor jenis jin yang ingin dipanggil: "))
+            if call == 1 or call == 2:
+                if call == 1:
+                    print("\nMemilih jin \"Pengumpul\".\n")
+                if call == 2:
+                    print("\nMemilih jin \"Pembangun\".\n")
+                usernamesama = True
+                while usernamesama == True:
+                    usernameJin = str(input("Masukkan username jin: "))
+                    usernamesama = False
+                    for i in range (length(jin)):
+                        if jin[i][2] == usernameJin:
+                            print(f"\nUsername \"{usernameJin}\" sudah diambil!")
+                            usernamesama = True
+                if usernamesama == False:
+                    passwordnya = False
+                    while passwordnya == False:
+                        password = str(input("Masukkan password jin: "))
+                        if len(password)<5 or len(password)>25:
+                            print("\nPassword panjangnya harus 5-25 karakter!\n")
+                        else:
+                            passwordnya = True
+                    print("\nMengumpulkan sesajen...")
+                    print("Menyerahkan sesajen...")
+                    print("Membacakan mantra...")
+                    
+                    if call == 1:
+                        jin = konso(jin, [call, length(jin)+1, usernameJin, password, -1])
+                    else:
+                        jin = konso(jin, [call, length(jin)+1, usernameJin, password, 0])
 
+                    print(f"Jin {usernameJin} berhasil dipanggil!")
+            else:
+                print(f"Tidak ada jenis jin bernomor \"{call}\"!")
+        else:
+            print("Jumlah Jin telah maksimal! (100 jin). Bandung tidak dapat men-summon lebih dari itu")
+    else:
+        print("Summon jin hanya dapat dilakukan oleh akun Bandung Bondowoso.")
+    return jin
+
+def hapusjin(jin, candi):
+    jin = konso(jin, [0,0,""])
+    jinDihapus = str(input("Masukkan username jin : "))
+    for i in range (length(jin)-1):
+        if jin[i][2] == jinDihapus:
+            check = str(input(f"Apakah anda yakin ingin menghapus jin dengan username {jinDihapus} (Y/N)? "))
+            if check == "Y":
+                jin = removelmt(jin, i)
+                print("\nJin telah berhasil dihapus dari alam gaib.")
+                for j in range (length(candi)):
+                    if candi[j][1] == str(i+1):
+                        candi = removelmt(candi, j)
+        else:
+            print("\nTidak ada jin dengan username tersebut.")
+    jin = removelmt(jin, length(jin)-1)
+    return candi, jin
 
 #F09 - Ambil Laporan Jin
 def laporanjin(user, jin, bahan_bangunan):
@@ -156,16 +219,16 @@ def laporancandi(user, candi):
     batu = 0
     air = 0
     for i in range (length(candi)):
-       pasir+=candi[i][2]
-       batu+=candi[i][3]
-       air+=candi[i][4]
+       pasir+=int(candi[i][2])
+       batu+=int(candi[i][3])
+       air+=int(candi[i][4])
     print("> Total Pasir yang digunakan:", pasir)
     print("> Total Batu yang digunakan:", batu)
     print("> Total Air yang digunakan:", air)
     if length(candi)>0:
         hargacandi = [0 for i in range (length(candi))]
         for i in range (length(candi)):
-           hargacandi[i]= 10000*candi[i][2] + 15000*candi[i][3] + 7500*candi[i][4]
+           hargacandi[i]= 10000*pasir + 15000*batu + 7500*air
         min = 0 
         max = 0
         for i in range (length(candi)):
@@ -204,7 +267,6 @@ def ayamberkokok() :
 
 # F13 - Load
 import os
-import argparse
 def load(source):
     if os.path.exists(source):
         users = csvtomatrix(f"{source}/user.csv")
@@ -214,3 +276,63 @@ def load(source):
     else:
         print(f"Folder \"{source}\" tidak ditemukan.")
         exit()
+
+#F15
+def help(logged_in, logged_user):
+    print("=========== HELP ===========")
+    if logged_in :
+        if logged_user == "bandung_bondowoso" :
+            print("1. logout")
+            print("   Untuk keluar dari akun yang digunakan sekarang")
+            print("2. summonjin")
+            print("   Untuk memanggil jin")
+            print("3. hapusjin")
+            print("   Untuk menghapus jin")
+            print("4. ubahjin")
+            print("   Untuk mengubah tipe jin")
+            print("5. batchbangun")
+            print("   Untuk membangun candi dengan semua Jin Pembangun")
+            print("6. batchkumpul")
+            print("   Untuk mengumpulkan bahan bangunan dengan semua Jin Pengumpul")
+            print("7. laporanjin")
+            print("   Untuk mengeluarkan laporan mengenai jin dan kinerja jin")
+            print("8. laporancandi")
+            print("   Untuk mengeluarkan laporan mengenai progres pembangunan candi")
+            print("9. save")
+            print("   Untuk menyimpan data ke dalam suatu file")
+            print("10. exit")
+            print("   Untuk keluar dari program dan kembali ke terminal")
+        elif logged_user == "roro_jonggrang" :
+            print("1. logout")
+            print("   Untuk keluar dari akun yang digunakan sekarang")
+            print("2. hancurkancandi")
+            print("   Untuk menghancurkan candi")
+            print("3. ayamberkokok")
+            print("   Untuk memeriksa jumlah candi yang telah dibangun")
+            print("4. save")
+            print("   Untuk menyimpan data ke dalam suatu file")
+            print("5. exit")
+            print("   Untuk keluar dari program dan kembali ke terminal")
+        elif logged_user == "jin_pembangun":
+            print("1. logout")
+            print("   Untuk keluar dari akun yang digunakan sekarang")
+            print("2. bangun")
+            print("   Untuk membangun candi")
+            print("3. save")
+            print("   Untuk menyimpan data ke dalam suatu file")
+            print("4. exit")
+            print("   Untuk keluar dari program dan kembali ke terminal")
+        elif logged_user == "jin_pengumpul":
+            print("1. logout")
+            print("   Untuk keluar dari akun yang digunakan sekarang")
+            print("2. kumpul")
+            print("   Untuk mengumpulkan resource candi")
+            print("3. save")
+            print("   Untuk menyimpan data ke dalam suatu file")
+            print("4. exit")
+            print("   Untuk keluar dari program dan kembali ke terminal")
+    else:
+        print("1. login")
+        print("   Untuk masuk menggunakan akun")
+        print("2. exit")
+        print("   Untuk keluar dari program dan kembali ke terminal")

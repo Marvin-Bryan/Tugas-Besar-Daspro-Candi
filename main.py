@@ -16,21 +16,19 @@ if __name__ == '__main__':
         exit()
 
 
-# Anggap semua fungsi yang dipanggil merupakan fungsi yang sudah dibuat sendiri pada modul lain
+# Inisialisasi data penting
 data = data.load(f"{args.folderName}")
 users = data[0]
 candi = data[1]
 bahan_bangunan = data[2]
 logged_in = False
 logged_user = ""
-print(users)
-print(candi)
-print(bahan_bangunan)
+jin = ["."]
 print("Selamat datang di program “Manajerial Candi”")
 print("Silahkan masukkan username Anda")
 
 # Array [Kode Jin, ID Jin, Nama Jin, Password, Jumlah Candi yg dibuat (khusus kode 2 atau kode 1 dikasi -1 aja)]
-jin = [[1, 1, "Asep", "Agus", -1, "."], [2, 2, "Ayam", "Unggas", 1, "."], [2, 3, "Jin", "Hal0", 10, "."], [2, 4, "Jon", "Alo", 7, "."], "."]
+# jin = [[1, 1, "Asep", "Agus", -1, "."], [2, 2, "Ayam", "Unggas", 1, "."], [2, 3, "Jin", "Hal0", 10, "."], [2, 4, "Jon", "Alo", 7, "."], "."]
 # dummy jin
 while True:
   masukan = input(">>> ")
@@ -38,5 +36,12 @@ while True:
     hasil = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user)
     logged_in = hasil[0]
     logged_user = hasil[1]
+  elif masukan == "summonjin":
+    jin = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user)
+    print(jin)
+  elif masukan == "hapusjin":
+    jindancandi = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user)
+    jin = jindancandi[1]
+    candi = jindancandi[0]
   else:
     commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user)
