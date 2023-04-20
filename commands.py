@@ -12,8 +12,9 @@ def run(input, user, candi, jin, bahan_bangunan, logged_in, logged_user):
         return jin
     elif input == "hapusjin":
         jindancandi = data.hapusjin(jin, candi)
+        return jindancandi
     elif input == "ubahjin":
-        data.ubahjin()
+        data.ubahjin(jin)
     elif input == "bangun":
         data.bangun()
     elif input == "kumpul":

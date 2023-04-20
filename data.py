@@ -1,3 +1,4 @@
+import bonus
 # Data Penting
 def length(a): # fungsi len
     sum = 0 
@@ -119,7 +120,7 @@ def logout(logged_in, logged_user): #F02
     print("Logout berhasil!")
     return logged_in, logged_user
 
-def summonjin(logged_user, jin): #F03
+def summonjin(logged_user, jin, user): #F03
     if logged_user == "bandung_bondowoso":
         if length(jin) != 100:
             print("Jenis jin yang dapat dipanggil:")
@@ -155,7 +156,7 @@ def summonjin(logged_user, jin): #F03
                         jin = konso(jin, [call, length(jin)+1, usernameJin, password, -1])
                     else:
                         jin = konso(jin, [call, length(jin)+1, usernameJin, password, 0])
-
+                    user = konso(user, [usernameJin, password, length(jin)+1])
                     print(f"Jin {usernameJin} berhasil dipanggil!")
             else:
                 print(f"Tidak ada jenis jin bernomor \"{call}\"!")
@@ -163,24 +164,68 @@ def summonjin(logged_user, jin): #F03
             print("Jumlah Jin telah maksimal! (100 jin). Bandung tidak dapat men-summon lebih dari itu")
     else:
         print("Summon jin hanya dapat dilakukan oleh akun Bandung Bondowoso.")
-    return jin
+    return jin, user
 
-def hapusjin(jin, candi):
-    jin = konso(jin, [0,0,""])
-    jinDihapus = str(input("Masukkan username jin : "))
-    for i in range (length(jin)-1):
-        if jin[i][2] == jinDihapus:
-            check = str(input(f"Apakah anda yakin ingin menghapus jin dengan username {jinDihapus} (Y/N)? "))
-            if check == "Y":
-                jin = removelmt(jin, i)
-                print("\nJin telah berhasil dihapus dari alam gaib.")
-                for j in range (length(candi)):
-                    if candi[j][1] == str(i+1):
-                        candi = removelmt(candi, j)
-        else:
+def hapusjin(jin, candi, logged_user, user): #F04
+    if logged_user == "bandung_bondowoso":
+        jin = konso(jin, [0,0,""])
+        jinDihapus = str(input("Masukkan username jin : "))
+        hapus = False
+        for i in range (length(jin)-1):
+            if jin[i][2] == jinDihapus:
+                hapus = True
+                check = str(input(f"Apakah anda yakin ingin menghapus jin dengan username {jinDihapus} (Y/N)? "))
+                if check == "Y":
+                    jin = removelmt(jin, i)
+                    print("\nJin telah berhasil dihapus dari alam gaib.")
+                    for j in range (length(candi)):
+                        if candi[j][1] == str(i+1):
+                            candi = removelmt(candi, j)
+                    for k in range (length(user)):
+                        if user[k][2] == str(i+1):
+                            user = removelmt(user, k)
+                elif check == "N":
+                    break
+        if hapus == False:
             print("\nTidak ada jin dengan username tersebut.")
-    jin = removelmt(jin, length(jin)-1)
+        jin = removelmt(jin, length(jin)-1)
+    else:
+        print("Hapus jin hanya dapat dilakukan oleh akun Bandung Bondowoso.")
     return candi, jin
+
+def ubahjin(jin, logged_user): #F05
+    if logged_user == "bandung_bondowoso":
+        ubah = str(input("Masukkan username jin : "))
+        ubah = False
+        for i in range (length(jin)):
+            ubah = True
+            if jin[i][2] == ubah:
+                if jin[i][0] == 1:
+                    a = "Pengumpul"
+                    b = "Pembangun"
+                else:
+                    a = "Pembangun"
+                    b = "Pengumpul"
+                check = str(input(f"Jin ini bertipe \"{a}\". Yakin ingin mengubah ke tipe \"{b}\" (Y/N)? "))
+                if check == "Y":
+                    if a == "Pengumpul":
+                        jin[i][0] = 2
+                    else:
+                        jin[i][0] = 1
+                elif check == "N":
+                    break
+            if ubah == False:
+                print("\nTidak ada jin dengan username tersebut.")
+    else:
+        print("Ubah jin hanya dapat dilakukan oleh akun Bandung Bondowoso.")
+
+def bangun(candi, bahan_bangunan, logged_user):
+    if logged_user == "jin_pembangun":
+        pasir = bonus.random()
+        batu = bonus.random()
+        air = bonus.random()
+        if pasir<=int(bahan_bangunan[0][2]) and batu<=int(bahan_bangunan[1][2]) and air<=int(bahan_bangunan[2][2]):
+            candi = konso(candi, [length(candi), logged_user, pasir, batu, air])
 
 #F09 - Ambil Laporan Jin
 def laporanjin(user, jin, bahan_bangunan):
