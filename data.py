@@ -83,8 +83,8 @@ def removelmt(arr, removed):
         if i != removed:
             li = konso(li, arr[i])
     return li
-
-def login(users, logged_in, logged_user): #F01
+#----------------------------------------------------------------F01 - LOGIN -------------------------------------------------------------------------------
+def login(users, logged_in, logged_user): 
     # tampilkan prompt login
     if logged_in:
         username = ""
@@ -115,14 +115,15 @@ def login(users, logged_in, logged_user): #F01
     return logged_in, logged_user
         
         # periksa command yang dimasukkan
-
-def logout(logged_in, logged_user): #F02
+#----------------------------------------------------------------F01 - LOGOUT -------------------------------------------------------------------------------
+def logout(logged_in, logged_user): 
     logged_in = False
     logged_user = ""
     print("Logout berhasil!")
     return logged_in, logged_user
 
-def summonjin(logged_user, jin, user, idjin): #F03
+#----------------------------------------------------------------F03 - Summon Jin -------------------------------------------------------------------------------
+def summonjin(logged_user, jin, user, idjin): 
     if logged_user == "bandung_bondowoso":
         if length(jin) != 100:
             print("Jenis jin yang dapat dipanggil:")
@@ -171,7 +172,8 @@ def summonjin(logged_user, jin, user, idjin): #F03
         print("Summon jin hanya dapat dilakukan oleh akun Bandung Bondowoso.")
     return jin, user, idjin
 
-def hapusjin(jin, candi, logged_user, user): #F04
+#----------------------------------------------------------------F04 - Hilangkan Jin --------------------------------------------------------------------------
+def hapusjin(jin, candi, logged_user, user):
     if logged_user == "bandung_bondowoso":
         jin = konso(jin, [0,0,""])
         jinDihapus = str(input("Masukkan username jin : "))
@@ -197,8 +199,8 @@ def hapusjin(jin, candi, logged_user, user): #F04
     else:
         print("Hapus jin hanya dapat dilakukan oleh akun Bandung Bondowoso.")
     return candi, jin, user
-
-def ubahjin(jin, logged_user, user): #F05 - belum ubah user
+#----------------------------------------------------------------F05 - Ubah Tipe Jin -------------------------------------------------------------------------
+def ubahjin(jin, logged_user, user): 
     if logged_user == "bandung_bondowoso":
         ubah = str(input("Masukkan username jin : "))
         ubah = False
@@ -224,7 +226,8 @@ def ubahjin(jin, logged_user, user): #F05 - belum ubah user
                 print("\nTidak ada jin dengan username tersebut.")
     else:
         print("Ubah jin hanya dapat dilakukan oleh akun Bandung Bondowoso.")
-
+        
+#----------------------------------------------------------------F06 - Jin Pembangun ------------------------------------------------------------------------
 def bangun(candi, bahan_bangunan, logged_user, jin):
     logged_user = int(logged_user)
     for i in range (length(jin)):
@@ -240,17 +243,18 @@ def bangun(candi, bahan_bangunan, logged_user, jin):
                     print("Bahan bangunan tidak mencukupi.\nCandi tidak bisa dibangun!")
     else:
         print("Membangun candi hanya dapat dilakukan oleh akun Jin Pembangun.")
-
+        
+#----------------------------------------------------------------F07 - Jin Pengumpul ----------------------------------------------------------------------
 def kumpul():
     print()
 
+#----------------------------------------------------------------F08 - Batch Kumpul/bangun -----------------------------------------------------------------
 def batchkumpul():
     print()
 
 def batchbangun():
     print()
-
-#F09 - Ambil Laporan Jin
+#----------------------------------------------------------------F09 - Ambil Laporan Jin ------------------------------------------------------------------
 def laporanjin(user, jin, bahan_bangunan):
   if user == "bandung_bondowoso":
     print()
@@ -278,7 +282,7 @@ def laporanjin(user, jin, bahan_bangunan):
   else:
     print("Laporan jin hanya dapat diakses oleh akun Bandung Bondowoso.")
 
-#F10 - Ambil Laporan Candi
+#------------------------------------------------------------F10 - Ambil Laporan Candi---------------------------------------------------------------------
 def laporancandi(user, candi):
   if user == "bandung_bondowoso":
     print()
@@ -319,11 +323,11 @@ def laporancandi(user, candi):
   else:
     print("Laporan candi hanya dapat diakses oleh akun Bandung Bondowoso.")
 
-# F11 Hancurkan Candi
+#------------------------------------------------------------------F11 Hancurkan Candi-----------------------------------------------------------------------
 def hancurkancandi():
     print()
 
-# F12 - Ayam berkokok
+#------------------------------------------------------------------F12 - Ayam berkokok-----------------------------------------------------------------------
 def ayamberkokok() :
     print ("Kukuruyuk.. Kukuruyuk..")
     jumlah_candi = int(input("Jumlah Candi : "))
@@ -335,7 +339,7 @@ def ayamberkokok() :
         print ("yah, Bandung Bowoso memenangkan permainan!")
         # Keluar Program
 
-# F13 - Load
+#-----------------------------------------------------------------F13 - Load--------------------------------------------------------------------------------
 import os
 def load(source):
     if os.path.exists(source):
@@ -346,11 +350,11 @@ def load(source):
     else:
         print(f"Folder \"{source}\" tidak ditemukan.")
         exit()
-
+#-----------------------------------------------------------------F14 - Save-------------------------------------------------------------------------------
 def save():
     print()
 
-#F15
+#-------------------------------------------------------------------F15 - Help ----------------------------------------------------------------------------
 def help(logged_in, logged_user):
     print("=========== HELP ===========")
     if logged_in :
@@ -409,3 +413,5 @@ def help(logged_in, logged_user):
         print("   Untuk masuk menggunakan akun")
         print("2. exit")
         print("   Untuk keluar dari program dan kembali ke terminal")
+        
+ #-----------------------------------------------------------------F16 - Exit-------------------------------------------------------------------------------
