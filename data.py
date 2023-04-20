@@ -72,6 +72,8 @@ def csvtomatrix(source):
                     word = ""
                 else:
                     word+=file[i]
+        array = konso(array, word)
+        matrix = konso(matrix, array)
         return matrix
 
 def removelmt(arr, removed):
@@ -87,7 +89,7 @@ def login(users, logged_in, logged_user): #F01
     if logged_in:
         username = ""
         for i in range (length(users)):
-            if users[i][2] == users:
+            if users[i][2] == logged_user:
                 username = users[i][0]
         print("Login gagal!")
         print("Anda telah login dengan username", username, end=", ")
@@ -120,7 +122,7 @@ def logout(logged_in, logged_user): #F02
     print("Logout berhasil!")
     return logged_in, logged_user
 
-def summonjin(logged_user, jin, user): #F03
+def summonjin(logged_user, jin, user, idjin): #F03
     if logged_user == "bandung_bondowoso":
         if length(jin) != 100:
             print("Jenis jin yang dapat dipanggil:")
@@ -153,18 +155,21 @@ def summonjin(logged_user, jin, user): #F03
                     print("Membacakan mantra...")
                     
                     if call == 1:
-                        jin = konso(jin, [call, length(jin)+1, usernameJin, password, -1])
+                        jin = konso(jin, [call, idjin, usernameJin, password, -1, "."])
                     else:
-                        jin = konso(jin, [call, length(jin)+1, usernameJin, password, 0])
-                    user = konso(user, [usernameJin, password, length(jin)+1])
+                        jin = konso(jin, [call, idjin, usernameJin, password, 0, "."])
+
+                    user = konso(user, [usernameJin, password, str(idjin), "."])
+
                     print(f"Jin {usernameJin} berhasil dipanggil!")
+                    idjin+=1
             else:
                 print(f"Tidak ada jenis jin bernomor \"{call}\"!")
         else:
             print("Jumlah Jin telah maksimal! (100 jin). Bandung tidak dapat men-summon lebih dari itu")
     else:
         print("Summon jin hanya dapat dilakukan oleh akun Bandung Bondowoso.")
-    return jin, user
+    return jin, user, idjin
 
 def hapusjin(jin, candi, logged_user, user): #F04
     if logged_user == "bandung_bondowoso":
@@ -191,9 +196,9 @@ def hapusjin(jin, candi, logged_user, user): #F04
         jin = removelmt(jin, length(jin)-1)
     else:
         print("Hapus jin hanya dapat dilakukan oleh akun Bandung Bondowoso.")
-    return candi, jin
+    return candi, jin, user
 
-def ubahjin(jin, logged_user): #F05
+def ubahjin(jin, logged_user, user): #F05 - belum ubah user
     if logged_user == "bandung_bondowoso":
         ubah = str(input("Masukkan username jin : "))
         ubah = False
@@ -212,6 +217,7 @@ def ubahjin(jin, logged_user): #F05
                         jin[i][0] = 2
                     else:
                         jin[i][0] = 1
+                    
                 elif check == "N":
                     break
             if ubah == False:
@@ -219,13 +225,30 @@ def ubahjin(jin, logged_user): #F05
     else:
         print("Ubah jin hanya dapat dilakukan oleh akun Bandung Bondowoso.")
 
-def bangun(candi, bahan_bangunan, logged_user):
-    if logged_user == "jin_pembangun":
-        pasir = bonus.random()
-        batu = bonus.random()
-        air = bonus.random()
-        if pasir<=int(bahan_bangunan[0][2]) and batu<=int(bahan_bangunan[1][2]) and air<=int(bahan_bangunan[2][2]):
-            candi = konso(candi, [length(candi), logged_user, pasir, batu, air])
+def bangun(candi, bahan_bangunan, logged_user, jin):
+    logged_user = int(logged_user)
+    for i in range (length(jin)):
+        if jin[i][1]==logged_user:
+            if jin[i][0] == 2:
+                pasir = bonus.random()
+                batu = bonus.random()
+                air = bonus.random()
+                if pasir<=int(bahan_bangunan[0][2]) and batu<=int(bahan_bangunan[1][2]) and air<=int(bahan_bangunan[2][2]):
+                    candi = konso(candi, [length(candi), logged_user, pasir, batu, air])
+                    print(f"Candi berhasil dibangun.\nSisa candi yang perlu dibangun: {100-length(candi)}.")
+                else:
+                    print("Bahan bangunan tidak mencukupi.\nCandi tidak bisa dibangun!")
+    else:
+        print("Membangun candi hanya dapat dilakukan oleh akun Jin Pembangun.")
+
+def kumpul():
+    print()
+
+def batchkumpul():
+    print()
+
+def batchbangun():
+    print()
 
 #F09 - Ambil Laporan Jin
 def laporanjin(user, jin, bahan_bangunan):
@@ -297,6 +320,8 @@ def laporancandi(user, candi):
     print("Laporan candi hanya dapat diakses oleh akun Bandung Bondowoso.")
 
 # F11 Hancurkan Candi
+def hancurkancandi():
+    print()
 
 # F12 - Ayam berkokok
 def ayamberkokok() :
@@ -321,6 +346,9 @@ def load(source):
     else:
         print(f"Folder \"{source}\" tidak ditemukan.")
         exit()
+
+def save():
+    print()
 
 #F15
 def help(logged_in, logged_user):

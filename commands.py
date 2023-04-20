@@ -1,6 +1,6 @@
 import data
 # RUN
-def run(input, user, candi, jin, bahan_bangunan, logged_in, logged_user):
+def run(input, user, candi, jin, bahan_bangunan, logged_in, logged_user, idjin):
     if input == "login":
         hasil = data.login(user, logged_in, logged_user)
         return hasil
@@ -8,15 +8,15 @@ def run(input, user, candi, jin, bahan_bangunan, logged_in, logged_user):
         hasil = data.logout(logged_in, logged_user)
         return hasil
     elif input == "summonjin":
-        jin = data.summonjin(logged_user, jin)
-        return jin
+        datajin = data.summonjin(logged_user, jin, user, idjin)
+        return datajin
     elif input == "hapusjin":
-        jindancandi = data.hapusjin(jin, candi)
-        return jindancandi
+        candijinuser = data.hapusjin(jin, candi, logged_user, user)
+        return candijinuser
     elif input == "ubahjin":
-        data.ubahjin(jin)
+        data.ubahjin(jin, logged_user)
     elif input == "bangun":
-        data.bangun()
+        data.bangun(candi, bahan_bangunan, logged_user, user)
     elif input == "kumpul":
         data.kumpul()
     elif input == "batchkumpul":

@@ -21,9 +21,11 @@ data = data.load(f"{args.folderName}")
 users = data[0]
 candi = data[1]
 bahan_bangunan = data[2]
+print(users, candi, bahan_bangunan)
 logged_in = False
 logged_user = ""
 jin = ["."]
+idjin = 1
 print("Selamat datang di program “Manajerial Candi”")
 print("Silahkan masukkan username Anda")
 
@@ -33,15 +35,17 @@ print("Silahkan masukkan username Anda")
 while True:
   masukan = input(">>> ")
   if masukan == "login" or masukan == "logout":
-    hasil = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user)
+    hasil = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin)
     logged_in = hasil[0]
     logged_user = hasil[1]
   elif masukan == "summonjin":
-    jin = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user)
-    print(jin)
+    datajin = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin)
+    jin = datajin[0]
+    users = datajin[1]
+    print(datajin)
   elif masukan == "hapusjin":
-    jindancandi = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user)
+    jindancandi = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin)
     jin = jindancandi[1]
     candi = jindancandi[0]
   else:
-    commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user)
+    commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin)
