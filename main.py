@@ -22,6 +22,7 @@ users = data[0]
 candi = data[1]
 bahan_bangunan = data[2]
 print(users, candi, bahan_bangunan)
+
 logged_in = False
 logged_user = ""
 jin = ["."]
@@ -30,8 +31,6 @@ print("Selamat datang di program “Manajerial Candi”")
 print("Silahkan masukkan username Anda")
 
 # Array [Kode Jin, ID Jin, Nama Jin, Password, Jumlah Candi yg dibuat (khusus kode 2 atau kode 1 dikasi -1 aja)]
-# jin = [[1, 1, "Asep", "Agus", -1, "."], [2, 2, "Ayam", "Unggas", 1, "."], [2, 3, "Jin", "Hal0", 10, "."], [2, 4, "Jon", "Alo", 7, "."], "."]
-# dummy jin
 while True:
   masukan = input(">>> ")
   if masukan == "login" or masukan == "logout":
@@ -54,6 +53,5 @@ while True:
      hasil = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin)
   elif masukan == "kumpul":
      hasil = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin)
-  elif
   else:
     commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin)

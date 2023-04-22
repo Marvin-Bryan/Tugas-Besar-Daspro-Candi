@@ -63,17 +63,18 @@ def csvtomatrix(source):
                     start = True
             else:
                 if file[i] == "\n":
-                    array = konso (array, word)
-                    word = ""
-                    matrix = konso(matrix, array)
-                    array = ["."]
+                        array = konso (array, word)
+                        word = ""
+                        matrix = konso(matrix, array)
+                        array = ["."]
                 elif file[i] == ";":
                     array = konso(array, word)
                     word = ""
                 else:
                     word+=file[i]
-        array = konso(array, word)
-        matrix = konso(matrix, array)
+        if word != "":
+            array = konso(array, word)
+            matrix = konso(matrix, array)
         return matrix
 
 def removelmt(arr, removed):
@@ -117,11 +118,13 @@ def login(users, logged_in, logged_user):
         # periksa command yang dimasukkan
 #----------------------------------------------------------------F02 - LOGOUT -------------------------------------------------------------------------------
 def logout(logged_in, logged_user): 
-    logged_in = False
-    logged_user = ""
-    print("Logout berhasil!")
+    if logged_in == True:
+        logged_in = False
+        logged_user = ""
+        print("Logout berhasil!")
+    else:
+        print("Logout gagal!\nAnda belum login, silahkan login terlebih dahulu sebelum melakukan logout")
     return logged_in, logged_user
-
 #----------------------------------------------------------------F03 - Summon Jin -------------------------------------------------------------------------------
 def summonjin(logged_user, jin, user, idjin): 
     if logged_user == "bandung_bondowoso":
@@ -130,48 +133,47 @@ def summonjin(logged_user, jin, user, idjin):
             print(" (1) Pengumpul - Bertugas mengumpulkan bahan bangunan")
             print(" (2) Pembangun - Bertugas membangun candi\n")
             call = int(input("Masukkan nomor jenis jin yang ingin dipanggil: "))
-            if call == 1 or call == 2:
-                if call == 1:
-                    print("\nMemilih jin \"Pengumpul\".\n")
-                if call == 2:
-                    print("\nMemilih jin \"Pembangun\".\n")
-                usernamesama = True
-                while usernamesama == True:
-                    usernameJin = str(input("Masukkan username jin: "))
-                    usernamesama = False
-                    for i in range (length(jin)):
-                        if jin[i][2] == usernameJin:
-                            print(f"\nUsername \"{usernameJin}\" sudah diambil!")
-                            usernamesama = True
-                if usernamesama == False:
-                    passwordnya = False
-                    while passwordnya == False:
-                        password = str(input("Masukkan password jin: "))
-                        if len(password)<5 or len(password)>25:
-                            print("\nPassword panjangnya harus 5-25 karakter!\n")
-                        else:
-                            passwordnya = True
-                    print("\nMengumpulkan sesajen...")
-                    print("Menyerahkan sesajen...")
-                    print("Membacakan mantra...")
-                    
-                    if call == 1:
-                        jin = konso(jin, [call, idjin, usernameJin, password, -1, "."])
+            while call != 1 and call != 2:
+                print(f"\nTidak ada jenis jin bernomor \"{call}\"!\n")
+                call = int(input("Masukkan nomor jenis jin yang ingin dipanggil: "))
+            if call == 1:
+                print("\nMemilih jin \"Pengumpul\".\n")
+            if call == 2:
+                print("\nMemilih jin \"Pembangun\".\n")
+            usernamesama = True
+            while usernamesama == True:
+                usernameJin = str(input("Masukkan username jin: "))
+                usernamesama = False
+                for i in range (length(jin)):
+                    if jin[i][2] == usernameJin:
+                        print(f"\nUsername \"{usernameJin}\" sudah diambil!")
+                        usernamesama = True
+            if usernamesama == False:
+                passwordnya = False
+                while passwordnya == False:
+                    password = str(input("Masukkan password jin: "))
+                    if len(password)<5 or len(password)>25:
+                        print("\nPassword panjangnya harus 5-25 karakter!\n")
                     else:
-                        jin = konso(jin, [call, idjin, usernameJin, password, 0, "."])
+                        passwordnya = True
+                print("\nMengumpulkan sesajen...")
+                print("Menyerahkan sesajen...")
+                print("Membacakan mantra...\n")
+                
+                if call == 1:
+                    jin = konso(jin, [call, idjin, usernameJin, password, -1, "."])
+                else:
+                    jin = konso(jin, [call, idjin, usernameJin, password, 0, "."])
 
-                    user = konso(user, [usernameJin, password, str(idjin), "."])
+                user = konso(user, [usernameJin, password, str(idjin), "."])
 
-                    print(f"Jin {usernameJin} berhasil dipanggil!")
-                    idjin+=1
-            else:
-                print(f"Tidak ada jenis jin bernomor \"{call}\"!")
+                print(f"Jin {usernameJin} berhasil dipanggil!")
+                idjin+=1
         else:
             print("Jumlah Jin telah maksimal! (100 jin). Bandung tidak dapat men-summon lebih dari itu")
     else:
         print("Summon jin hanya dapat dilakukan oleh akun Bandung Bondowoso.")
     return jin, user, idjin
-
 #----------------------------------------------------------------F04 - Hilangkan Jin --------------------------------------------------------------------------
 def hapusjin(jin, candi, logged_user, user):
     if logged_user == "bandung_bondowoso":
@@ -200,7 +202,7 @@ def hapusjin(jin, candi, logged_user, user):
         print("Hapus jin hanya dapat dilakukan oleh akun Bandung Bondowoso.")
     return candi, jin, user
 #----------------------------------------------------------------F05 - Ubah Tipe Jin -------------------------------------------------------------------------
-def ubahjin(jin, logged_user, user): 
+def ubahjin(jin, logged_user): 
     if logged_user == "bandung_bondowoso":
         ubah = str(input("Masukkan username jin : "))
         ubah = False
@@ -431,15 +433,17 @@ def hancurkancandi(logged_user, candi):
     return candi
 
 #------------------------------------------------------------------F12 - Ayam berkokok-----------------------------------------------------------------------
-def ayamberkokok() :
+def ayamberkokok(candi) :
     print ("Kukuruyuk.. Kukuruyuk..")
-    jumlah_candi = int(input("Jumlah Candi : "))
+    jumlah_candi = length(candi)
     if jumlah_candi <= 100 :
         print ("*Bandung Bondowoso angry noise*")
         print ("Roro Jonggrang dikutuk menjadi candi")
+        exit()
         # Keluar Program
     else : #jumlah candi > 100
-        print ("yah, Bandung Bowoso memenangkan permainan!")
+        print ("yah, Bandung Bondowoso memenangkan permainan!")
+        exit()
         # Keluar Program
 
 #-----------------------------------------------------------------F13 - Load--------------------------------------------------------------------------------
@@ -449,6 +453,10 @@ def load(source):
         users = csvtomatrix(f"{source}/user.csv")
         candi = csvtomatrix(f"{source}/candi.csv")
         bahan_bangunan = csvtomatrix(f"{source}/bahan_bangunan.csv")
+        if length(bahan_bangunan)==0:
+            bahan_bangunan = konso(bahan_bangunan, ["pasir","serbuk","0","."])
+            bahan_bangunan = konso(bahan_bangunan, ["batu","keras","0","."])
+            bahan_bangunan = konso(bahan_bangunan, ["air","cair","0","."])
         return users, candi, bahan_bangunan
     else:
         print(f"Folder \"{source}\" tidak ditemukan.")
@@ -524,7 +532,6 @@ def save(user, candi, bahan_bangunan):
             newline = True
 
     print(f"Berhasil menyimpan data di folder {path_folder}!")
-
 #-------------------------------------------------------------------F15 - Help ----------------------------------------------------------------------------
 def help(logged_in, logged_user):
     print("=========== HELP ===========")
@@ -584,8 +591,7 @@ def help(logged_in, logged_user):
         print("   Untuk masuk menggunakan akun")
         print("2. exit")
         print("   Untuk keluar dari program dan kembali ke terminal")
-        
- #-----------------------------------------------------------------F16 - Exit-------------------------------------------------------------------------------
+#-----------------------------------------------------------------F16 - Exit-------------------------------------------------------------------------------
 def exit(user,candi,bahan_bangunan):
     answer = "x"
     while answer != "y" or answer != "Y" or answer != "n" or answer != "N":

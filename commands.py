@@ -32,12 +32,12 @@ def run(input, user, candi, jin, bahan_bangunan, logged_in, logged_user, idjin):
     elif input == "hancurkancandi":
         data.hancurkancandi()
     elif input == "ayamberkokok":
-        data.ayamberkokok()
+        data.ayamberkokok(candi)
     elif input == "save":
         data.save()
     elif input == "help":
-        data.help(logged_in, logged_user)
+        data.help(logged_in,logged_user)
     elif input == "exit":
-        exit()
+        data.exit(user,candi,bahan_bangunan)
     else:
         return 0
