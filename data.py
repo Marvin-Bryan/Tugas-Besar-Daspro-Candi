@@ -466,6 +466,7 @@ def save(user, candi, bahan_bangunan):
     nama_file = "user.csv"
     path_file = os.path.join(path_folder, nama_file)
 
+    with open(path_file, mode='w', newline='') as file:
         header = "username;password;role\n"
         file.write(header)
         newline = True
