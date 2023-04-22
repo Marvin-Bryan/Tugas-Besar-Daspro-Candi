@@ -42,10 +42,18 @@ while True:
     datajin = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin)
     jin = datajin[0]
     users = datajin[1]
+    idjin = datajin[2]
     print(datajin)
   elif masukan == "hapusjin":
     jindancandi = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin)
     jin = jindancandi[1]
     candi = jindancandi[0]
+  elif masukan == "ubahjin":
+     jin = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin)
+  elif masukan == "bangun":
+     hasil = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin)
+  elif masukan == "kumpul":
+     hasil = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin)
+  elif
   else:
     commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin)

@@ -184,10 +184,10 @@ def hapusjin(jin, candi, logged_user, user): #F04
                     jin = removelmt(jin, i)
                     print("\nJin telah berhasil dihapus dari alam gaib.")
                     for j in range (length(candi)):
-                        if candi[j][1] == str(i+1):
+                        if candi[j][1] == str(jin[i][1]):
                             candi = removelmt(candi, j)
                     for k in range (length(user)):
-                        if user[k][2] == str(i+1):
+                        if user[k][2] == str(jin[i][1]):
                             user = removelmt(user, k)
                 elif check == "N":
                     break
@@ -198,7 +198,7 @@ def hapusjin(jin, candi, logged_user, user): #F04
         print("Hapus jin hanya dapat dilakukan oleh akun Bandung Bondowoso.")
     return candi, jin, user
 
-def ubahjin(jin, logged_user, user): #F05 - belum ubah user
+def ubahjin(jin, logged_user): #F05
     if logged_user == "bandung_bondowoso":
         ubah = str(input("Masukkan username jin : "))
         ubah = False
@@ -224,31 +224,121 @@ def ubahjin(jin, logged_user, user): #F05 - belum ubah user
                 print("\nTidak ada jin dengan username tersebut.")
     else:
         print("Ubah jin hanya dapat dilakukan oleh akun Bandung Bondowoso.")
+    return jin
 
-def bangun(candi, bahan_bangunan, logged_user, jin):
-    logged_user = int(logged_user)
-    for i in range (length(jin)):
-        if jin[i][1]==logged_user:
-            if jin[i][0] == 2:
-                pasir = bonus.random()
-                batu = bonus.random()
-                air = bonus.random()
-                if pasir<=int(bahan_bangunan[0][2]) and batu<=int(bahan_bangunan[1][2]) and air<=int(bahan_bangunan[2][2]):
-                    candi = konso(candi, [length(candi), logged_user, pasir, batu, air])
-                    print(f"Candi berhasil dibangun.\nSisa candi yang perlu dibangun: {100-length(candi)}.")
-                else:
-                    print("Bahan bangunan tidak mencukupi.\nCandi tidak bisa dibangun!")
+def bangun(candi, bahan_bangunan, logged_user, jin, idcandi): #F06
+    if logged_user!="bandung_bondowoso" or logged_user!="roro_jonggrang":
+        logged_user = int(logged_user)
+        bangun = False
+        for i in range (length(jin)):
+            if jin[i][1]==logged_user:
+                if jin[i][0] == 2:
+                    bangun = True
+                    pasir = bonus.random()
+                    batu = bonus.random()
+                    air = bonus.random()
+                    if pasir<=int(bahan_bangunan[0][2]) and batu<=int(bahan_bangunan[1][2]) and air<=int(bahan_bangunan[2][2]):
+                        candi = konso(candi, [idcandi, logged_user, pasir, batu, air])
+                        idcandi+=1
+                        a = int(bahan_bangunan[0][2])
+                        a -= pasir
+                        a = str(a)
+                        b = int(bahan_bangunan[1][2])
+                        b -= batu
+                        b = str(b)
+                        c = int(bahan_bangunan[2][2])
+                        c -= air
+                        c = str(c)
+                        print(f"Candi berhasil dibangun.\nSisa candi yang perlu dibangun: {100-length(candi)}.")
+                    else:
+                        print("Bahan bangunan tidak mencukupi.\nCandi tidak bisa dibangun!")
+        if bangun == False:
+            print("Membangun candi hanya dapat dilakukan oleh akun Jin Pembangun.")
     else:
         print("Membangun candi hanya dapat dilakukan oleh akun Jin Pembangun.")
+    return a,b,c,candi,idcandi
 
-def kumpul():
-    print()
+def kumpul(logged_user, jin, bahan_bangunan):
+    if logged_user!="bandung_bondowoso" or logged_user!="roro_jonggrang":
+        logged_user = int(logged_user)
+        kumpul = False
+        for i in range (length(jin)):
+            if jin[i][1]==logged_user:
+                if jin[i][0] == 1:
+                    kumpul = True
+                    pasir = bonus.random()
+                    batu = bonus.random()
+                    air = bonus.random()
+                    a = int(bahan_bangunan[0][2])
+                    a += pasir
+                    a = str(a)
+                    b = int(bahan_bangunan[1][2])
+                    b += batu
+                    b = str(b)
+                    c = int(bahan_bangunan[2][2])
+                    c += air
+                    c = str(c)
+                    print(f"Jin menemukan {pasir} pasir, {batu} batu, dan {air} air.")
+        if kumpul == False:
+            print("Mengumpulkan bahan hanya dapat dilakukan oleh akun Jin Pengumpul.")
+    else:
+        print("Mengumpulkan bahan hanya dapat dilakukan oleh akun Jin Pengumpul.")
+    return a,b,c
 
-def batchkumpul():
-    print()
+def batchkumpul(logged_user, jin, bahan_bangunan):
+    pasir = 0
+    batu = 0
+    air = 0
+    sumjin = 0
+    if logged_user == "bandung_bondowoso":
+        for i in range (length(jin)):
+            if jin[i][0] == 1:
+                sumjin+=1
+                pasir+=bonus.random()
+                batu+=bonus.random()
+                air+=bonus.random()
+        if sumjin == 0:
+            print("Kumpul gagal. Anda tidak punya jin pengumpul. Silahkan summon terlebih dahulu.")
+        else:
+            print(f"Mengerahkan {sumjin} jin untuk mengumpulkan bahan.\nJin menemukan total {a} pasir, {b} batu, dan {c} air.")
+            a = int(bahan_bangunan[0][2])
+            a += pasir
+            a = str(a)
+            b = int(bahan_bangunan[1][2])
+            b += batu
+            b = str(b)
+            c = int(bahan_bangunan[2][2])
+            c += air
+            c = str(c)
+    else:
+        print("Batch kumpul hanya dapat dilakukan oleh akun Bandung Bondowoso.")
+    return a,b,c
 
-def batchbangun():
-    print()
+def batchbangun(logged_user, jin, bahan_bangunan):
+    pasir = 0
+    batu = 0
+    air = 0
+    candibaru = ["."]
+    sumjin = 0
+    if logged_user == "bandung_bondowoso":
+        for i in range (length(jin)):
+            if jin[i][0] == 2:
+                sumjin+=1
+        if sumjin == 0:
+            print("Bangun gagal. Anda tidak punya jin pembangun. Silahkan summon terlebih dahulu.")
+        else:
+            for i in range (sumjin):
+                pasir+=bonus.random()
+                batu+=bonus.random()
+                air+=bonus.random()
+                candibaru = konso(candibaru,[pasir,batu,air,"."])
+            if pasir<=int(bahan_bangunan[0][2]) and batu<=int(bahan_bangunan[1][2]) and air <=int(bahan_bangunan[2][2]):
+                for i in range (length(candibaru)):
+                    
+            else:
+                print(f"Mengerahkan {sumjin} jin untuk membangun candi dengan total bahan {bahan_bangunan[0][2]} pasir, {bahan_bangunan[1][2]} batu, dan {bahan_bangunan[2][2]} air.\nBangun gagal. Kurang {pasir-int(bahan_bangunan[0][2])} pasir, {batu-int(bahan_bangunan[1][2])} batu, dan {air-int(bahan_bangunan[2][2])} air.")
+    else:
+        print("Batch kumpul hanya dapat dilakukan oleh akun Bandung Bondowoso.")
 
 #F09 - Ambil Laporan Jin
 def laporanjin(user, jin, bahan_bangunan):

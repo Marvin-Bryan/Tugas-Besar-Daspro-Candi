@@ -14,7 +14,8 @@ def run(input, user, candi, jin, bahan_bangunan, logged_in, logged_user, idjin):
         candijinuser = data.hapusjin(jin, candi, logged_user, user)
         return candijinuser
     elif input == "ubahjin":
-        data.ubahjin(jin, logged_user)
+        jin = data.ubahjin(jin, logged_user)
+        return jin
     elif input == "bangun":
         data.bangun(candi, bahan_bangunan, logged_user, user)
     elif input == "kumpul":
