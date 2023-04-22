@@ -316,7 +316,7 @@ def batchkumpul(logged_user, jin, bahan_bangunan):
         print("Batch kumpul hanya dapat dilakukan oleh akun Bandung Bondowoso.")
     return a,b,c
 
-def batchbangun(logged_user, jin, bahan_bangunan):
+def batchbangun(logged_user, jin, bahan_bangunan, idcandi):
     pasir = 0
     batu = 0
     air = 0
@@ -335,8 +335,11 @@ def batchbangun(logged_user, jin, bahan_bangunan):
                 air+=bonus.random()
                 candibaru = konso(candibaru,[pasir,batu,air,"."])
             if pasir<=int(bahan_bangunan[0][2]) and batu<=int(bahan_bangunan[1][2]) and air <=int(bahan_bangunan[2][2]):
-                for i in range (length(candibaru)):
-                    
+                for i in range (length(jin)):
+                    if jin[i][0] == 2:
+                        a = 0
+                        candi = konso(candi, [str(idcandi),str(jin[i][1]),str(candibaru[a][0]),str(candibaru[a][1]),str(candibaru[a][2]),"."])
+                        candi+=1
             else:
                 print(f"Mengerahkan {sumjin} jin untuk membangun candi dengan total bahan {bahan_bangunan[0][2]} pasir, {bahan_bangunan[1][2]} batu, dan {bahan_bangunan[2][2]} air.\nBangun gagal. Kurang {pasir-int(bahan_bangunan[0][2])} pasir, {batu-int(bahan_bangunan[1][2])} batu, dan {air-int(bahan_bangunan[2][2])} air.")
     else:
@@ -412,8 +415,20 @@ def laporancandi(user, candi):
     print("Laporan candi hanya dapat diakses oleh akun Bandung Bondowoso.")
 
 #------------------------------------------------------------------F11 Hancurkan Candi-----------------------------------------------------------------------
-def hancurkancandi():
-    print()
+def hancurkancandi(logged_user, candi):
+    if logged_user == "roro_jonggrang":
+        id = int(input("Masukkan ID candi: "))
+        for i in range (length(candi)):
+            if candi[i][0] == str(id):
+                check = str(input(f"Apakah anda yakin ingin menghancurkan candi ID: {id} (Y/N)? "))
+                if check == "Y":
+                    print("\nCandi telah berhasil dihancurkan.")
+                    candi = removelmt(candi,i)
+                else:
+                    break
+            else:
+                print("\nTidak ada candi dengan ID tersebut.")
+    return candi
 
 #------------------------------------------------------------------F12 - Ayam berkokok-----------------------------------------------------------------------
 def ayamberkokok() :
@@ -439,8 +454,75 @@ def load(source):
         print(f"Folder \"{source}\" tidak ditemukan.")
         exit()
 #-----------------------------------------------------------------F14 - Save-------------------------------------------------------------------------------
-def save():
-    print()
+def save(user, candi, bahan_bangunan):
+    nama_folder = str(input("\nMasukkan nama folder:"))
+    folder_save = "./save"
+    path_folder = os.path.join(folder_save, nama_folder)
+    print("\nSaving...\n")
+    if not os.path.exists(path_folder):
+        os.makedirs(path_folder)
+        print(f"Membuat folder {path_folder}...")
+    
+    nama_file = "user.csv"
+    path_file = os.path.join(path_folder, nama_file)
+
+        header = "username;password;role\n"
+        file.write(header)
+        newline = True
+        for i in range (length(user)):
+            for j in range(length(user[i])):
+                if newline == True:
+                    n = user[i][j]
+                    file.write(str(n))
+                    newline = False
+                else:
+                    file.write(";")
+                    n = user[i][j]
+                    file.write(str(n))
+            file.write("\n")
+            newline = True
+
+    nama_file = "candi.csv"
+    path_file = os.path.join(path_folder, nama_file)
+
+    with open(path_file, mode='w', newline='') as file:
+        header = "id;pembuat;pasir;batu;air\n"
+        file.write(header)
+        newline = True
+        for i in range (length(candi)):
+            for j in range(length(candi[i])):
+                if newline == True:
+                    n = candi[i][j]
+                    file.write(str(n))
+                    newline = False
+                else:
+                    file.write(";")
+                    n = candi[i][j]
+                    file.write(str(n))
+            file.write("\n")
+            newline = True
+    
+    nama_file = "bahan_bangunan.csv"
+    path_file = os.path.join(path_folder, nama_file)
+
+    with open(path_file, mode='w', newline='') as file:
+        header = "nama;deskripsi;jumlah\n"
+        file.write(header)
+        newline = True
+        for i in range (length(bahan_bangunan)):
+            for j in range(length(bahan_bangunan[i])):
+                if newline == True:
+                    n = bahan_bangunan[i][j]
+                    file.write(str(n))
+                    newline = False
+                else:
+                    file.write(";")
+                    n = bahan_bangunan[i][j]
+                    file.write(str(n))
+            file.write("\n")
+            newline = True
+
+    print(f"Berhasil menyimpan data di folder {path_folder}!")
 
 #-------------------------------------------------------------------F15 - Help ----------------------------------------------------------------------------
 def help(logged_in, logged_user):
@@ -503,3 +585,12 @@ def help(logged_in, logged_user):
         print("   Untuk keluar dari program dan kembali ke terminal")
         
  #-----------------------------------------------------------------F16 - Exit-------------------------------------------------------------------------------
+def exit(user,candi,bahan_bangunan):
+    answer = "x"
+    while answer != "y" or answer != "Y" or answer != "n" or answer != "N":
+        answer = str(input("Apakah Anda mau melakukan penyimpanan file yang sudah diubah? (y/n)"))
+    if answer == "y" or answer == "Y":
+        save(user,candi,bahan_bangunan)
+        exit()
+    else:
+        exit()

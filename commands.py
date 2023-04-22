@@ -17,7 +17,8 @@ def run(input, user, candi, jin, bahan_bangunan, logged_in, logged_user, idjin):
         jin = data.ubahjin(jin, logged_user)
         return jin
     elif input == "bangun":
-        data.bangun(candi, bahan_bangunan, logged_user, user)
+        hasil = data.bangun(candi, bahan_bangunan, logged_user, user)
+        return hasil
     elif input == "kumpul":
         data.kumpul()
     elif input == "batchkumpul":
