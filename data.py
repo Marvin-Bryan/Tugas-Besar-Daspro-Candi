@@ -229,8 +229,8 @@ def ubahjin(jin, logged_user):
     else:
         print("Ubah jin hanya dapat dilakukan oleh akun Bandung Bondowoso.")
     return jin
-
-def bangun(candi, bahan_bangunan, logged_user, jin, idcandi): #F06
+#----------------------------------------------------------------F06 - Jin Pembangun -------------------------------------------------------------------------------
+def bangun(candi, bahan_bangunan, logged_user, jin, idcandi): 
     if logged_user!="bandung_bondowoso" or logged_user!="roro_jonggrang":
         logged_user = int(logged_user)
         bangun = False
@@ -262,6 +262,7 @@ def bangun(candi, bahan_bangunan, logged_user, jin, idcandi): #F06
         print("Membangun candi hanya dapat dilakukan oleh akun Jin Pembangun.")
     return a,b,c,candi,idcandi
 
+#----------------------------------------------------------------F07 - Jin pengumpul -------------------------------------------------------------------------------
 def kumpul(logged_user, jin, bahan_bangunan):
     if logged_user!="bandung_bondowoso" or logged_user!="roro_jonggrang":
         logged_user = int(logged_user)
@@ -289,6 +290,7 @@ def kumpul(logged_user, jin, bahan_bangunan):
         print("Mengumpulkan bahan hanya dapat dilakukan oleh akun Jin Pengumpul.")
     return a,b,c
 
+#----------------------------------------------------------------F08 - Batch Kumpul/Bangun -----------------------------------------------------------------------
 def batchkumpul(logged_user, jin, bahan_bangunan):
     pasir = 0
     batu = 0
@@ -347,7 +349,7 @@ def batchbangun(logged_user, jin, bahan_bangunan, idcandi):
     else:
         print("Batch kumpul hanya dapat dilakukan oleh akun Bandung Bondowoso.")
 
-#F09 - Ambil Laporan Jin
+#-----------------------------------------------------F09 - Ambil Laporan Jin--------------------------------------------------------------------------------
 def laporanjin(user, jin, bahan_bangunan):
   if user == "bandung_bondowoso":
     print()
