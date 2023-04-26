@@ -598,7 +598,7 @@ def close(user,candi,bahan_bangunan):
     answer = "x"
     while answer != "y" or answer != "Y" or answer != "n" or answer != "N":
         answer = str(input("Apakah Anda mau melakukan penyimpanan file yang sudah diubah? (y/n)"))
-    if answer == "y" or answer == "Y":
+    if answer != "y" or answer != "Y":
         save(user,candi,bahan_bangunan)
         exit()
     else:
