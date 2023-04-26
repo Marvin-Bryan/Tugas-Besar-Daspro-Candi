@@ -439,7 +439,7 @@ def hancurkancandi(logged_user, candi):
 def ayamberkokok(candi) :
     print ("Kukuruyuk.. Kukuruyuk..")
     jumlah_candi = length(candi)
-    if jumlah_candi <= 100 :
+    if jumlah_candi < 100 :
         print ("*Bandung Bondowoso angry noise*")
         print ("Roro Jonggrang dikutuk menjadi candi")
         exit()
