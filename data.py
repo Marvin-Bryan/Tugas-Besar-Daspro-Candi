@@ -264,7 +264,7 @@ def bangun(candi, bahan_bangunan, logged_user, jin, idcandi):
 
 #----------------------------------------------------------------F07 - Jin pengumpul -------------------------------------------------------------------------------
 def kumpul(logged_user, jin, bahan_bangunan):
-    if logged_user!="bandung_bondowoso" or logged_user!="roro_jonggrang":
+    if logged_user!="bandung_bondowoso" and logged_user!="roro_jonggrang":
         logged_user = int(logged_user)
         kumpul = False
         for i in range (length(jin)):
@@ -344,6 +344,7 @@ def batchbangun(logged_user, jin, bahan_bangunan, idcandi):
                         a = 0
                         candi = konso(candi, [str(idcandi),str(jin[i][1]),str(candibaru[a][0]),str(candibaru[a][1]),str(candibaru[a][2]),"."])
                         candi+=1
+                        idcandi+=1
             else:
                 print(f"Mengerahkan {sumjin} jin untuk membangun candi dengan total bahan {bahan_bangunan[0][2]} pasir, {bahan_bangunan[1][2]} batu, dan {bahan_bangunan[2][2]} air.\nBangun gagal. Kurang {pasir-int(bahan_bangunan[0][2])} pasir, {batu-int(bahan_bangunan[1][2])} batu, dan {air-int(bahan_bangunan[2][2])} air.")
     else:

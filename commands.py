@@ -1,6 +1,6 @@
 import data
 # RUN
-def run(input, user, candi, jin, bahan_bangunan, logged_in, logged_user, idjin):
+def run(input, user, candi, jin, bahan_bangunan, logged_in, logged_user, idjin, idcandi):
     if input == "login":
         hasil = data.login(user, logged_in, logged_user)
         return hasil
@@ -20,17 +20,21 @@ def run(input, user, candi, jin, bahan_bangunan, logged_in, logged_user, idjin):
         hasil = data.bangun(candi, bahan_bangunan, logged_user, user)
         return hasil
     elif input == "kumpul":
-        data.kumpul()
+        hasil = data.kumpul(logged_user, jin, bahan_bangunan)
+        return hasil
     elif input == "batchkumpul":
-        data.batchkumpul()
+        hasil = data.batchkumpul(logged_user, jin, bahan_bangunan)
+        return hasil
     elif input == "batchbangun":
-        data.batchbangun()
+        hasil = data.batchbangun(logged_user, jin, bahan_bangunan, idcandi)
+        return hasil
     elif input == "laporanjin":
         data.laporanjin(logged_user, jin, bahan_bangunan)
     elif input == "laporancandi":
         data.laporancandi(logged_user, candi)
     elif input == "hancurkancandi":
-        data.hancurkancandi()
+        hasilcandi = data.hancurkancandi(logged_user, candi)
+        return hasilcandi
     elif input == "ayamberkokok":
         data.ayamberkokok(candi)
     elif input == "save":

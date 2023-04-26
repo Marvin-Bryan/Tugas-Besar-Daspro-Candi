@@ -16,4 +16,4 @@ def random():
 
     rand = lcg.rand()
     rand_int = int(rand*6)
-    return rand_int
+    return rand_int 

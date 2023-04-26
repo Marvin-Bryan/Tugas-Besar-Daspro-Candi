@@ -27,6 +27,7 @@ logged_in = False
 logged_user = ""
 jin = ["."]
 idjin = 1
+idcandi = 1
 print("Selamat datang di program “Manajerial Candi”")
 print("Silahkan masukkan username Anda")
 
@@ -34,24 +35,26 @@ print("Silahkan masukkan username Anda")
 while True:
   masukan = input(">>> ")
   if masukan == "login" or masukan == "logout":
-    hasil = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin)
+    hasil = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin, idcandi)
     logged_in = hasil[0]
     logged_user = hasil[1]
   elif masukan == "summonjin":
-    datajin = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin)
+    datajin = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin, idcandi)
     jin = datajin[0]
     users = datajin[1]
     idjin = datajin[2]
     print(datajin)
   elif masukan == "hapusjin":
-    jindancandi = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin)
+    jindancandi = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin, idcandi)
     jin = jindancandi[1]
     candi = jindancandi[0]
   elif masukan == "ubahjin":
-     jin = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin)
+     jin = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin, idcandi)
   elif masukan == "bangun":
-     hasil = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin)
+     hasil = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin, idcandi)
   elif masukan == "kumpul":
-     hasil = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin)
+     hasil = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin, idcandi)
+  elif masukan == "hancurkancandi":
+     candi = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin, idcandi)
   else:
-    commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin)
+    commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin, idcandi)
