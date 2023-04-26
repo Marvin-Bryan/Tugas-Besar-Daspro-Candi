@@ -38,6 +38,6 @@ def run(input, user, candi, jin, bahan_bangunan, logged_in, logged_user, idjin):
     elif input == "help":
         data.help(logged_in,logged_user)
     elif input == "exit":
-        data.exit(user,candi,bahan_bangunan)
+        data.close(user,candi,bahan_bangunan)
     else:
         return 0

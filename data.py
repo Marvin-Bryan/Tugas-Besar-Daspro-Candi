@@ -592,7 +592,7 @@ def help(logged_in, logged_user):
         print("2. exit")
         print("   Untuk keluar dari program dan kembali ke terminal")
 #-----------------------------------------------------------------F16 - Exit-------------------------------------------------------------------------------
-def exit(user,candi,bahan_bangunan):
+def close(user,candi,bahan_bangunan):
     answer = "x"
     while answer != "y" or answer != "Y" or answer != "n" or answer != "N":
         answer = str(input("Apakah Anda mau melakukan penyimpanan file yang sudah diubah? (y/n)"))
