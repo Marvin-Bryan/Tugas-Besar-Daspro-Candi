@@ -1,4 +1,4 @@
-import bonus
+import random
 # Data Penting
 def length(a): # fungsi len
     sum = 0 
@@ -205,10 +205,10 @@ def hapusjin(jin, candi, logged_user, user):
 def ubahjin(jin, logged_user): 
     if logged_user == "bandung_bondowoso":
         ubah = str(input("Masukkan username jin : "))
-        ubah = False
+        ubahjin = False
         for i in range (length(jin)):
-            ubah = True
             if jin[i][2] == ubah:
+                ubahjin = True
                 if jin[i][0] == 1:
                     a = "Pengumpul"
                     b = "Pembangun"
@@ -221,26 +221,29 @@ def ubahjin(jin, logged_user):
                         jin[i][0] = 2
                     else:
                         jin[i][0] = 1
-                    
+                    print("\nJin telah berhasil diubah.")
                 elif check == "N":
                     break
-            if ubah == False:
-                print("\nTidak ada jin dengan username tersebut.")
+        if ubahjin == False:
+            print("\nTidak ada jin dengan username tersebut.")
     else:
         print("Ubah jin hanya dapat dilakukan oleh akun Bandung Bondowoso.")
     return jin
 #----------------------------------------------------------------F06 - Jin Pembangun -------------------------------------------------------------------------------
-def bangun(candi, bahan_bangunan, logged_user, jin, idcandi): 
-    if logged_user!="bandung_bondowoso" or logged_user!="roro_jonggrang":
+def bangun(candi, bahan_bangunan, logged_user, jin, idcandi):
+    a = bahan_bangunan[0][2]
+    b = bahan_bangunan[1][2]
+    c = bahan_bangunan[2][2]
+    if logged_user!="bandung_bondowoso" and logged_user!="roro_jonggrang":
         logged_user = int(logged_user)
         bangun = False
         for i in range (length(jin)):
             if jin[i][1]==logged_user:
                 if jin[i][0] == 2:
                     bangun = True
-                    pasir = bonus.random()
-                    batu = bonus.random()
-                    air = bonus.random()
+                    pasir = random.randint(1,5)
+                    batu = random.randint(1,5)
+                    air = random.randint(1,5)
                     if pasir<=int(bahan_bangunan[0][2]) and batu<=int(bahan_bangunan[1][2]) and air<=int(bahan_bangunan[2][2]):
                         candi = konso(candi, [idcandi, logged_user, pasir, batu, air])
                         idcandi+=1
@@ -264,6 +267,9 @@ def bangun(candi, bahan_bangunan, logged_user, jin, idcandi):
 
 #----------------------------------------------------------------F07 - Jin pengumpul -------------------------------------------------------------------------------
 def kumpul(logged_user, jin, bahan_bangunan):
+    a = bahan_bangunan[0][2]
+    b = bahan_bangunan[1][2]
+    c = bahan_bangunan[2][2]
     if logged_user!="bandung_bondowoso" and logged_user!="roro_jonggrang":
         logged_user = int(logged_user)
         kumpul = False
@@ -271,9 +277,9 @@ def kumpul(logged_user, jin, bahan_bangunan):
             if jin[i][1]==logged_user:
                 if jin[i][0] == 1:
                     kumpul = True
-                    pasir = bonus.random()
-                    batu = bonus.random()
-                    air = bonus.random()
+                    pasir = random.randint(0,5)
+                    batu = random.randint(0,5)
+                    air = random.randint(0,5)
                     a = int(bahan_bangunan[0][2])
                     a += pasir
                     a = str(a)
@@ -296,17 +302,20 @@ def batchkumpul(logged_user, jin, bahan_bangunan):
     batu = 0
     air = 0
     sumjin = 0
+    a = bahan_bangunan[0][2]
+    b = bahan_bangunan[1][2]
+    c = bahan_bangunan[2][2]
     if logged_user == "bandung_bondowoso":
         for i in range (length(jin)):
             if jin[i][0] == 1:
                 sumjin+=1
-                pasir+=bonus.random()
-                batu+=bonus.random()
-                air+=bonus.random()
+                pasir+=random.randInt(0,5)
+                batu+=random.randInt(0,5)
+                air+=random.randInt(0,5)
         if sumjin == 0:
             print("Kumpul gagal. Anda tidak punya jin pengumpul. Silahkan summon terlebih dahulu.")
         else:
-            print(f"Mengerahkan {sumjin} jin untuk mengumpulkan bahan.\nJin menemukan total {a} pasir, {b} batu, dan {c} air.")
+            print(f"Mengerahkan {sumjin} jin untuk mengumpulkan bahan.\nJin menemukan total {pasir} pasir, {batu} batu, dan {air} air.")
             a = int(bahan_bangunan[0][2])
             a += pasir
             a = str(a)
@@ -334,9 +343,9 @@ def batchbangun(logged_user, jin, bahan_bangunan, idcandi):
             print("Bangun gagal. Anda tidak punya jin pembangun. Silahkan summon terlebih dahulu.")
         else:
             for i in range (sumjin):
-                pasir+=bonus.random()
-                batu+=bonus.random()
-                air+=bonus.random()
+                pasir+=random.randInt(1,5)
+                batu+=random.randInt(1,5)
+                air+=random.randInt(1,5)
                 candibaru = konso(candibaru,[pasir,batu,air,"."])
             if pasir<=int(bahan_bangunan[0][2]) and batu<=int(bahan_bangunan[1][2]) and air <=int(bahan_bangunan[2][2]):
                 for i in range (length(jin)):
@@ -423,16 +432,18 @@ def laporancandi(user, candi):
 def hancurkancandi(logged_user, candi):
     if logged_user == "roro_jonggrang":
         id = int(input("Masukkan ID candi: "))
+        cek_id = False
         for i in range (length(candi)):
             if candi[i][0] == str(id):
+                cek_id = True
                 check = str(input(f"Apakah anda yakin ingin menghancurkan candi ID: {id} (Y/N)? "))
                 if check == "Y":
                     print("\nCandi telah berhasil dihancurkan.")
                     candi = removelmt(candi,i)
                 else:
                     break
-            else:
-                print("\nTidak ada candi dengan ID tersebut.")
+        if cek_id == False:
+            print("\nTidak ada candi dengan ID tersebut.")
     return candi
 
 #------------------------------------------------------------------F12 - Ayam berkokok-----------------------------------------------------------------------
@@ -467,7 +478,7 @@ def load(source):
 #-----------------------------------------------------------------F14 - Save-------------------------------------------------------------------------------
 def save(user, candi, bahan_bangunan):
     nama_folder = str(input("\nMasukkan nama folder:"))
-    folder_save = "./save"
+    folder_save = ".\save"
     path_folder = os.path.join(folder_save, nama_folder)
     print("\nSaving...\n")
     if not os.path.exists(path_folder):
@@ -536,7 +547,7 @@ def save(user, candi, bahan_bangunan):
 
     print(f"Berhasil menyimpan data di folder {path_folder}!")
 #-------------------------------------------------------------------F15 - Help ----------------------------------------------------------------------------
-def help(logged_in, logged_user):
+def help(logged_in, logged_user, jin):
     print("=========== HELP ===========")
     if logged_in :
         if logged_user == "bandung_bondowoso" :
@@ -571,24 +582,27 @@ def help(logged_in, logged_user):
             print("   Untuk menyimpan data ke dalam suatu file")
             print("5. exit")
             print("   Untuk keluar dari program dan kembali ke terminal")
-        elif logged_user == "jin_pembangun":
-            print("1. logout")
-            print("   Untuk keluar dari akun yang digunakan sekarang")
-            print("2. bangun")
-            print("   Untuk membangun candi")
-            print("3. save")
-            print("   Untuk menyimpan data ke dalam suatu file")
-            print("4. exit")
-            print("   Untuk keluar dari program dan kembali ke terminal")
-        elif logged_user == "jin_pengumpul":
-            print("1. logout")
-            print("   Untuk keluar dari akun yang digunakan sekarang")
-            print("2. kumpul")
-            print("   Untuk mengumpulkan resource candi")
-            print("3. save")
-            print("   Untuk menyimpan data ke dalam suatu file")
-            print("4. exit")
-            print("   Untuk keluar dari program dan kembali ke terminal")
+        else:
+            for i in range(length(jin)):
+                if int(logged_user) == jin[i][1]:
+                    if jin[1][0] == 2:
+                        print("1. logout")
+                        print("   Untuk keluar dari akun yang digunakan sekarang")
+                        print("2. bangun")
+                        print("   Untuk membangun candi")
+                        print("3. save")
+                        print("   Untuk menyimpan data ke dalam suatu file")
+                        print("4. exit")
+                        print("   Untuk keluar dari program dan kembali ke terminal")
+                    if jin[1][0] == 1:
+                        print("1. logout")
+                        print("   Untuk keluar dari akun yang digunakan sekarang")
+                        print("2. kumpul")
+                        print("   Untuk mengumpulkan resource candi")
+                        print("3. save")
+                        print("   Untuk menyimpan data ke dalam suatu file")
+                        print("4. exit")
+                        print("   Untuk keluar dari program dan kembali ke terminal")
     else:
         print("1. login")
         print("   Untuk masuk menggunakan akun")

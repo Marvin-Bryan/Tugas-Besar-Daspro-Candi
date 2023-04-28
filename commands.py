@@ -17,7 +17,7 @@ def run(input, user, candi, jin, bahan_bangunan, logged_in, logged_user, idjin, 
         jin = data.ubahjin(jin, logged_user)
         return jin
     elif input == "bangun":
-        hasil = data.bangun(candi, bahan_bangunan, logged_user, user)
+        hasil = data.bangun(candi, bahan_bangunan, logged_user, jin, idcandi)
         return hasil
     elif input == "kumpul":
         hasil = data.kumpul(logged_user, jin, bahan_bangunan)
@@ -38,9 +38,9 @@ def run(input, user, candi, jin, bahan_bangunan, logged_in, logged_user, idjin, 
     elif input == "ayamberkokok":
         data.ayamberkokok(candi)
     elif input == "save":
-        data.save()
+        data.save(user, candi, bahan_bangunan)
     elif input == "help":
-        data.help(logged_in,logged_user)
+        data.help(logged_in,logged_user, jin)
     elif input == "exit":
         data.close(user,candi,bahan_bangunan)
     else:
