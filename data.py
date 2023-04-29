@@ -112,7 +112,7 @@ def login(users, logged_in, logged_user):
         password = input("Password: ")
         # periksa apakah pengguna masih login saat mencoba login kembali
         found = False
-        # periksa apakah username dan password cocok\
+        # periksa apakah username dan password cocok
         for i in range (length(users)):
             if users[i][0] == username:
                 found = True
@@ -401,9 +401,9 @@ def laporanjin(user, jin, bahan_bangunan):
     else:
         print("> Jin Terajin:")
         print("> Jin Termalas:")
-    print("> Jumlah Pasir:", bahan_bangunan[0][2])
-    print("> Jumlah Air:", bahan_bangunan[1][2])
-    print("> Jumlah Batu:", bahan_bangunan[2][2])
+    print("> Jumlah Pasir:", bahan_bangunan[0][2], "unit")
+    print("> Jumlah Air:", bahan_bangunan[1][2], "unit")
+    print("> Jumlah Batu:", bahan_bangunan[2][2], "unit")
   else:
     print("Laporan jin hanya dapat diakses oleh akun Bandung Bondowoso.")
 
