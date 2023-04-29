@@ -84,6 +84,12 @@ def removelmt(arr, removed):
         if i != removed:
             li = konso(li, arr[i])
     return li
+
+def minimal_nol(angka):
+    if angka<0:
+        return 0
+    else:
+        return angka
 #----------------------------------------------------------------F01 - LOGIN -------------------------------------------------------------------------------
 def login(users, logged_in, logged_user): 
     # tampilkan prompt login
@@ -309,9 +315,9 @@ def batchkumpul(logged_user, jin, bahan_bangunan):
         for i in range (length(jin)):
             if jin[i][0] == 1:
                 sumjin+=1
-                pasir+=random.randInt(0,5)
-                batu+=random.randInt(0,5)
-                air+=random.randInt(0,5)
+                pasir+=random.randint(0,5)
+                batu+=random.randint(0,5)
+                air+=random.randint(0,5)
         if sumjin == 0:
             print("Kumpul gagal. Anda tidak punya jin pengumpul. Silahkan summon terlebih dahulu.")
         else:
@@ -343,9 +349,9 @@ def batchbangun(logged_user, jin, bahan_bangunan, idcandi):
             print("Bangun gagal. Anda tidak punya jin pembangun. Silahkan summon terlebih dahulu.")
         else:
             for i in range (sumjin):
-                pasir+=random.randInt(1,5)
-                batu+=random.randInt(1,5)
-                air+=random.randInt(1,5)
+                pasir+=random.randint(1,5)
+                batu+=random.randint(1,5)
+                air+=random.randint(1,5)
                 candibaru = konso(candibaru,[pasir,batu,air,"."])
             if pasir<=int(bahan_bangunan[0][2]) and batu<=int(bahan_bangunan[1][2]) and air <=int(bahan_bangunan[2][2]):
                 for i in range (length(jin)):
@@ -355,7 +361,7 @@ def batchbangun(logged_user, jin, bahan_bangunan, idcandi):
                         candi+=1
                         idcandi+=1
             else:
-                print(f"Mengerahkan {sumjin} jin untuk membangun candi dengan total bahan {bahan_bangunan[0][2]} pasir, {bahan_bangunan[1][2]} batu, dan {bahan_bangunan[2][2]} air.\nBangun gagal. Kurang {pasir-int(bahan_bangunan[0][2])} pasir, {batu-int(bahan_bangunan[1][2])} batu, dan {air-int(bahan_bangunan[2][2])} air.")
+                print(f"Mengerahkan {sumjin} jin untuk membangun candi dengan total bahan {bahan_bangunan[0][2]} pasir, {bahan_bangunan[1][2]} batu, dan {bahan_bangunan[2][2]} air.\nBangun gagal. Kurang {minimal_nol(pasir-int(bahan_bangunan[0][2]))} pasir, {minimal_nol(batu-int(bahan_bangunan[1][2]))} batu, dan {minimal_nol(air-int(bahan_bangunan[2][2]))} air.")
     else:
         print("Batch kumpul hanya dapat dilakukan oleh akun Bandung Bondowoso.")
 
@@ -471,7 +477,6 @@ def load(source):
             bahan_bangunan = konso(bahan_bangunan, ["pasir","serbuk","0","."])
             bahan_bangunan = konso(bahan_bangunan, ["batu","keras","0","."])
             bahan_bangunan = konso(bahan_bangunan, ["air","cair","0","."])
-        return users, candi, bahan_bangunan
     else:
         print(f"Folder \"{source}\" tidak ditemukan.")
         exit()
