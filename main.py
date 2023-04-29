@@ -21,10 +21,10 @@ data = data.load(f"{args.folderName}")
 users = data[0]
 candi = data[1]
 bahan_bangunan = data[2]
+jin = data[3]
 
 logged_in = False
 logged_user = ""
-jin = ["."]
 idjin = 1
 idcandi = 1
 print("Selamat datang di program “Manajerial Candi”")
@@ -55,11 +55,17 @@ while True:
      bahan_bangunan[2][2] = hasil[2]
      candi = hasil[3]
      idcandi = hasil[4]
+     users = hasil[5]
   elif masukan == "kumpul" or masukan == "batchkumpul":
      hasil = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin, idcandi)
      bahan_bangunan[0][2] = hasil[0]
      bahan_bangunan[1][2] = hasil[1]
      bahan_bangunan[2][2] = hasil[2]
+  elif masukan == "batchbangun":
+     hasil = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin, idcandi)
+     candi = hasil[0]
+     jin = hasil[1]
+     users = hasil[2]
   elif masukan == "hancurkancandi":
      candi = commands.run(masukan, users, candi, jin, bahan_bangunan, logged_in, logged_user, idjin, idcandi)
   else:

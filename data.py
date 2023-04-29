@@ -41,6 +41,12 @@ def array_slicing(start, end, array): # fungsi slicing
         sliced = konso(sliced, array[i])
     return sliced
 
+def str_slicing(start, end, string): # fungsi slicing
+    sliced = ""
+    for i in range(start, end):
+        sliced += string[i]
+    return sliced
+
 def join(array): # gabungkan array ke text
     string = ""
     for i in range (length(array)):
@@ -165,13 +171,10 @@ def summonjin(logged_user, jin, user, idjin):
                 print("\nMengumpulkan sesajen...")
                 print("Menyerahkan sesajen...")
                 print("Membacakan mantra...\n")
-                
-                if call == 1:
-                    jin = konso(jin, [call, idjin, usernameJin, password, -1, "."])
-                else:
-                    jin = konso(jin, [call, idjin, usernameJin, password, 0, "."])
 
-                user = konso(user, [usernameJin, password, str(idjin), "."])
+                jin = konso(jin, [call, idjin, usernameJin, password, 0, "."])
+
+                user = konso(user, [usernameJin, password, str(idjin), call, 0, "."])
 
                 print(f"Jin {usernameJin} berhasil dipanggil!")
                 idjin+=1
@@ -193,12 +196,18 @@ def hapusjin(jin, candi, logged_user, user):
                 if check == "Y":
                     jin = removelmt(jin, i)
                     print("\nJin telah berhasil dihapus dari alam gaib.")
-                    for j in range (length(candi)):
+                    j = 0
+                    k = 0
+                    while candi[j] != ".":
                         if candi[j][1] == str(jin[i][1]):
                             candi = removelmt(candi, j)
-                    for k in range (length(user)):
+                        else:
+                            j += 1
+                    while user[k] != ".":
                         if user[k][2] == str(jin[i][1]):
                             user = removelmt(user, k)
+                        else:
+                            k += 1
                 elif check == "N":
                     break
         if hapus == False:
@@ -236,7 +245,7 @@ def ubahjin(jin, logged_user):
         print("Ubah jin hanya dapat dilakukan oleh akun Bandung Bondowoso.")
     return jin
 #----------------------------------------------------------------F06 - Jin Pembangun -------------------------------------------------------------------------------
-def bangun(candi, bahan_bangunan, logged_user, jin, idcandi):
+def bangun(candi, bahan_bangunan, logged_user, jin, idcandi, users):
     a = bahan_bangunan[0][2]
     b = bahan_bangunan[1][2]
     c = bahan_bangunan[2][2]
@@ -251,6 +260,8 @@ def bangun(candi, bahan_bangunan, logged_user, jin, idcandi):
                     batu = random.randint(1,5)
                     air = random.randint(1,5)
                     if pasir<=int(bahan_bangunan[0][2]) and batu<=int(bahan_bangunan[1][2]) and air<=int(bahan_bangunan[2][2]):
+                        jin[i][4]+=1
+                        users[i+2][4]+=1
                         candi = konso(candi, [idcandi, logged_user, pasir, batu, air])
                         idcandi+=1
                         a = int(bahan_bangunan[0][2])
@@ -269,7 +280,7 @@ def bangun(candi, bahan_bangunan, logged_user, jin, idcandi):
             print("Membangun candi hanya dapat dilakukan oleh akun Jin Pembangun.")
     else:
         print("Membangun candi hanya dapat dilakukan oleh akun Jin Pembangun.")
-    return a,b,c,candi,idcandi
+    return a,b,c,candi,idcandi,jin
 
 #----------------------------------------------------------------F07 - Jin pengumpul -------------------------------------------------------------------------------
 def kumpul(logged_user, jin, bahan_bangunan):
@@ -335,7 +346,7 @@ def batchkumpul(logged_user, jin, bahan_bangunan):
         print("Batch kumpul hanya dapat dilakukan oleh akun Bandung Bondowoso.")
     return a,b,c
 
-def batchbangun(logged_user, jin, bahan_bangunan, idcandi):
+def batchbangun(logged_user, jin, bahan_bangunan, idcandi, users, candi):
     pasir = 0
     batu = 0
     air = 0
@@ -358,12 +369,15 @@ def batchbangun(logged_user, jin, bahan_bangunan, idcandi):
                     if jin[i][0] == 2:
                         a = 0
                         candi = konso(candi, [str(idcandi),str(jin[i][1]),str(candibaru[a][0]),str(candibaru[a][1]),str(candibaru[a][2]),"."])
-                        candi+=1
+                        jin[i][4]+=1
+                        users[i+2][4]+=1
                         idcandi+=1
+                print(f"Mengerahkan {sumjin} jin untuk membangun candi dengan total bahan {bahan_bangunan[0][2]} pasir, {bahan_bangunan[1][2]} batu, dan {bahan_bangunan[2][2]} air.\nJin berhasil membangun total {length(candibaru)} candi.")
             else:
                 print(f"Mengerahkan {sumjin} jin untuk membangun candi dengan total bahan {bahan_bangunan[0][2]} pasir, {bahan_bangunan[1][2]} batu, dan {bahan_bangunan[2][2]} air.\nBangun gagal. Kurang {minimal_nol(pasir-int(bahan_bangunan[0][2]))} pasir, {minimal_nol(batu-int(bahan_bangunan[1][2]))} batu, dan {minimal_nol(air-int(bahan_bangunan[2][2]))} air.")
     else:
-        print("Batch kumpul hanya dapat dilakukan oleh akun Bandung Bondowoso.")
+        print("Batch bangun hanya dapat dilakukan oleh akun Bandung Bondowoso.")
+    return candi, jin, users
 
 #-----------------------------------------------------F09 - Ambil Laporan Jin--------------------------------------------------------------------------------
 def laporanjin(user, jin, bahan_bangunan):
@@ -379,9 +393,9 @@ def laporanjin(user, jin, bahan_bangunan):
     bubble_sort_matrix(jin, 4)
     aturjin = ["."]
     for i in range (length(jin)):
-       if jin[i][4] != -1:
+       if jin[i][0] != 1:
           aturjin = konso(aturjin, jin[i])
-    if length(aturjin)-1>0:
+    if length(aturjin)>1:
         print("> Jin Terajin:", aturjin[length(aturjin)-1][2])
         print("> Jin Termalas:", aturjin[0][2])
     else:
@@ -409,8 +423,12 @@ def laporancandi(user, candi):
     print("> Total Batu yang digunakan:", batu)
     print("> Total Air yang digunakan:", air)
     if length(candi)>0:
-        hargacandi = [0 for i in range (length(candi))]
+        hargacandi = [0 for i in range (length(candi)+1)]
+        hargacandi[length(candi)] = "."
         for i in range (length(candi)):
+           pasir = int(candi[i][2])
+           batu = int(candi[i][3])
+           air = int(candi[i][4])
            hargacandi[i]= 10000*pasir + 15000*batu + 7500*air
         min = 0 
         max = 0
@@ -422,10 +440,10 @@ def laporancandi(user, candi):
         # Ubah format harga candi
         def formatrupiah(uang):
             uang = str(uang)
-            if length(uang)==5:
-               return join(array_slicing(0, 2, uang)) + "." + join(array_slicing(2, 5, uang))
+            if len(uang)==5:
+               return str_slicing(0, 2, uang) + "." + str_slicing(2, 5, uang)
             else:
-               return join(array_slicing(0,3,uang)) + "." + join(array_slicing(3,6,uang))
+               return str_slicing(0,3,uang) + "." + str_slicing(3,6,uang)
         print("> ID Candi Termahal:", candi[max][0], "(Rp "+formatrupiah(hargacandi[max])+")")
         print("> ID Candi Termurah:", candi[min][0], "(Rp "+formatrupiah(hargacandi[min])+")")
     else:
@@ -473,10 +491,15 @@ def load(source):
         users = csvtomatrix(f"{source}/user.csv")
         candi = csvtomatrix(f"{source}/candi.csv")
         bahan_bangunan = csvtomatrix(f"{source}/bahan_bangunan.csv")
+        jin = ["."]
         if length(bahan_bangunan)==0:
             bahan_bangunan = konso(bahan_bangunan, ["pasir","serbuk","0","."])
             bahan_bangunan = konso(bahan_bangunan, ["batu","keras","0","."])
             bahan_bangunan = konso(bahan_bangunan, ["air","cair","0","."])
+        if length(users)>2:
+            for i in range (2, length(users)):
+                jin = konso(jin, [int(users[i][3]), int(users[i][2]), users[i][0], users[i][1], int(users[i][4]), "."])
+        return users, candi, bahan_bangunan, jin
     else:
         print(f"Folder \"{source}\" tidak ditemukan.")
         exit()

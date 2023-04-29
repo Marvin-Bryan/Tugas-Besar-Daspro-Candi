@@ -17,7 +17,7 @@ def run(input, user, candi, jin, bahan_bangunan, logged_in, logged_user, idjin, 
         jin = data.ubahjin(jin, logged_user)
         return jin
     elif input == "bangun":
-        hasil = data.bangun(candi, bahan_bangunan, logged_user, jin, idcandi)
+        hasil = data.bangun(candi, bahan_bangunan, logged_user, jin, idcandi, user)
         return hasil
     elif input == "kumpul":
         hasil = data.kumpul(logged_user, jin, bahan_bangunan)
@@ -26,7 +26,7 @@ def run(input, user, candi, jin, bahan_bangunan, logged_in, logged_user, idjin, 
         hasil = data.batchkumpul(logged_user, jin, bahan_bangunan)
         return hasil
     elif input == "batchbangun":
-        hasil = data.batchbangun(logged_user, jin, bahan_bangunan, idcandi)
+        hasil = data.batchbangun(logged_user, jin, bahan_bangunan, idcandi, user, candi)
         return hasil
     elif input == "laporanjin":
         data.laporanjin(logged_user, jin, bahan_bangunan)
